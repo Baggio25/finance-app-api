@@ -6,8 +6,8 @@ export class PostgresCreateUserRepository {
             'INSERT INTO users ( id, first_name, last_name, email, password ) VALUES ( $1, $2, $3, $4, $5 )',
             [
                 createUserParams.id,
-                createUserParams.first_name,
-                createUserParams.last_name,
+                createUserParams.firstName,
+                createUserParams.lastName,
                 createUserParams.email,
                 createUserParams.password,
             ],
