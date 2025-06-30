@@ -1,28 +1,36 @@
-import 'dotenv/config.js'
-import express from 'express'
-import { CreateUserController } from './src/controllers/createUser.js'
-import { GetUserByIdController } from './src/controllers/getUserById.js'
+import 'dotenv/config.js';
+import express from 'express';
+import { CreateUserController } from './src/controllers/createUser.js';
+import { GetUserByIdController } from './src/controllers/getUserById.js';
+import { UpdateUserController } from './src/controllers/updateUser.js';
 
-const app = express()
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 app.post('/api/users', async (req, res) => {
-    const createUserController = new CreateUserController()
-    const { statusCode, body } = await createUserController.execute(req)
+    const createUserController = new CreateUserController();
+    const { statusCode, body } = await createUserController.execute(req);
 
-    res.status(statusCode).json(body)
-})
+    res.status(statusCode).json(body);
+});
 
 app.get('/api/users/:userId', async (req, res) => {
-    const getUserByIdController = new GetUserByIdController()
-    const { statusCode, body } = await getUserByIdController.execute(req)
+    const getUserByIdController = new GetUserByIdController();
+    const { statusCode, body } = await getUserByIdController.execute(req);
 
-    res.status(statusCode).json(body)
-})
+    res.status(statusCode).json(body);
+});
+
+app.patch('/api/users/:userId', async (req, res) => {
+    const updatedUserController = new UpdateUserController();
+    const { statusCode, body } = await updatedUserController.execute(req);
+
+    res.status(statusCode).json(body);
+});
 
 app.listen(process.env.SERVER_PORT, () =>
     console.log(
         `******** Listening on port ${process.env.SERVER_PORT}  ********`,
     ),
-)
+);
