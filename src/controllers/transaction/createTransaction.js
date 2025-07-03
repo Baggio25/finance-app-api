@@ -17,17 +17,13 @@ export class CreateTransactionController {
         try {
             const params = httpRequest.body;
 
-            const requiredFields = [
-                'id',
-                'userId',
-                'name',
-                'date',
-                'amount',
-                'type',
-            ];
+            const requiredFields = ['userId', 'name', 'date', 'amount', 'type'];
 
             for (const field of requiredFields) {
-                if (!params[field] || params[field].trim().length === 0) {
+                if (
+                    !params[field] ||
+                    params[field].toString().trim().length === 0
+                ) {
                     return badRequest({ message: `Missing param: ${field}` });
                 }
             }
@@ -47,7 +43,7 @@ export class CreateTransactionController {
                 params.amount.toString(),
                 {
                     digits_after_decimal: [2],
-                    allow_decimal: false,
+                    allow_decimal: true,
                     decimal_separator: '.',
                 },
             );
@@ -62,7 +58,7 @@ export class CreateTransactionController {
             const typeIsValid = !['EARNING', 'EXPENSE', 'INVESTMENT'].includes(
                 type,
             );
-            if (!typeIsValid) {
+            if (typeIsValid) {
                 return badRequest({
                     message: 'The type must be EARNING, EXPENSE or INVESTMENT.',
                 });
