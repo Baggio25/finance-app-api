@@ -6,6 +6,12 @@ export const invalidIdResponse = () =>
         message: 'The provided is not valid.',
     });
 
+export const requiredFieldIsMissingResponse = (field) => {
+    return badRequest({
+        message: `The field '${field}' is required`,
+    });
+};
+
 export const checkIfIdIsValid = (userId) => validator.isUUID(userId);
 
 export const checkIfIsString = (value) => typeof value === 'string';
