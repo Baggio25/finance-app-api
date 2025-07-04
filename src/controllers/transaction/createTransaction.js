@@ -38,7 +38,6 @@ export class CreateTransactionController {
             }
 
             const type = params.type.trim().toUpperCase();
-
             const typeIsValid = checkIfTypeIsValid(type);
             if (!typeIsValid) {
                 return invalidTypeResponse();
