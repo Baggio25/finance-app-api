@@ -1,6 +1,6 @@
 import { PostresHelper } from '../../../db/postgres/helper.js';
 
-export class PostgresGetTransactionsByUserId {
+export class PostgresGetTransactionsByUserIdRepository {
     async execute(userId) {
         const transactions = await PostresHelper.query(
             `
