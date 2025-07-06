@@ -1,4 +1,4 @@
-import { updatedValues } from '../helpers/updateValues';
+import { updatedValues } from '../helpers/updateValues.js';
 
 export class PostgresUpdateTransactionRepository {
     async execute(transactionId, updateTransactionParams) {
