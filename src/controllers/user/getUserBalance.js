@@ -1,8 +1,10 @@
+import { UserNotFoundError } from '../../errors/user.js';
 import {
     checkIfIdIsValid,
     invalidIdResponse,
     ok,
     serverError,
+    userNotFoundResponse,
 } from '../helpers/index.js';
 
 export class GetUserBalanceController {
@@ -18,10 +20,16 @@ export class GetUserBalanceController {
                 return invalidIdResponse();
             }
 
-            const balance = await this.getUserBalanceUseCase({ userId });
+            const balance = await this.getUserBalanceUseCase.execute({
+                userId,
+            });
 
             return ok(balance);
         } catch (error) {
+            if (error instanceof UserNotFoundError) {
+                return userNotFoundResponse();
+            }
+
             console.error(error);
             return serverError();
         }
