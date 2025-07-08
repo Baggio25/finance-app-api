@@ -18,7 +18,6 @@ export class CreateUserController {
 
             return created(createdUser);
         } catch (error) {
-            console.error(error);
             if (error instanceof ZodError) {
                 return badRequest({
                     message: error.errors[0].message,
@@ -27,6 +26,7 @@ export class CreateUserController {
             if (error instanceof EmailAlreadyInUseError) {
                 return badRequest({ message: error.message });
             }
+            console.error(error);
             return serverError();
         }
     }
