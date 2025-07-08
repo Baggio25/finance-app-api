@@ -12,8 +12,8 @@ BEGIN
 				sum(case when type = 'INVESTMENT' then amount else 0 end) as investimentos,  
 				sum(case when type = 'EXPENSE' then amount else 0 end) as gastos,
 				(
-				 sum(case when type = 'EARNING' then amount else 0 end) + 
-				 sum(case when type = 'INVESTMENT' then amount else 0 end) -   
+				 (sum(case when type = 'EARNING' then amount else 0 end) + 
+				 sum(case when type = 'INVESTMENT' then amount else 0 end)) -   
 				 sum(case when type = 'EXPENSE' then amount else 0 end)
 				) as balance
 			from transactions 
