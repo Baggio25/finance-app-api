@@ -9,29 +9,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   id String @id @default(uuid())
   first_name String @db.VarChar(50)
   last_name String @db.VarChar(50)
   email String @db.VarChar(100) @unique
   password String @db.VarChar(100)
 
-  transactions Transaction[]
+  transactions transaction[]
 }
 
-enum TransactionType {
+enum transactionType {
   EARNING
   EXPENSE 
   INVESTMENT
 }
 
-model Transaction {
+model transaction {
   id String @id @default(uuid())
   user_id String
   name String @db.VarChar(50)
   date DateTime @db.Date
   amount Decimal @db.Decimal(10,2)
-  type TransactionType
+  type transactionType
 
-  user User @relation(fields: [user_id], references: [id])
+  user user @relation(fields: [user_id], references: [id])
 }

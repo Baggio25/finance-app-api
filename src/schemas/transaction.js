@@ -2,7 +2,7 @@ import { z } from 'zod';
 import validator from 'validator';
 
 export const createTransactionSchema = z.object({
-    userId: z
+    user_id: z
         .string({
             required_error: 'User id is required',
         })
