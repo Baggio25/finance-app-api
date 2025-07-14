@@ -1,8 +1,7 @@
 import 'dotenv/config.js';
 import express from 'express';
 
-import { usersRouter } from './src/routes/users.js';
-import { transactionsRouter } from './src/routes/transactions.js';
+import { usersRouter, transactionsRouter } from './src/routes/index.js';
 
 const app = express();
 
