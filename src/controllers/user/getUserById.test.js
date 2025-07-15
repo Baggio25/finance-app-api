@@ -1,0 +1,34 @@
+import { faker } from '@faker-js/faker';
+import { GetUserByIdController } from './getUserById.js';
+
+describe('GetUserByIdController', () => {
+    class GetUserByIdCaseStub {
+        async execute() {
+            return {
+                first_name: faker.person.firstName(),
+                last_name: faker.person.lastName(),
+                email: faker.internet.email(),
+                password: faker.internet.password({
+                    length: 7,
+                }),
+            };
+        }
+    }
+
+    const makeSut = () => {
+        const getUserByIdUseCase = new GetUserByIdCaseStub();
+        const sut = new GetUserByIdController(getUserByIdUseCase);
+
+        return { sut, getUserByIdUseCase };
+    };
+
+    it('should return 200 if user is found', async () => {
+        const { sut } = makeSut();
+
+        const result = await sut.execute({
+            params: { userId: faker.string.uuid() },
+        });
+
+        expect(result.statusCode).toBe(200);
+    });
+});
