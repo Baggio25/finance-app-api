@@ -1,0 +1,34 @@
+import { faker } from '@faker-js/faker';
+import { GetUserBalanceController } from './getUserBalance';
+
+describe('GetUserBalanceController', () => {
+    class GetUserBalanceUseCaseStub {
+        async execute() {
+            return faker.finance.currency();
+        }
+    }
+
+    const makeSut = () => {
+        const getUserBalanceUseCase = new GetUserBalanceUseCaseStub();
+        const sut = new GetUserBalanceController(getUserBalanceUseCase);
+
+        return { sut, getUserBalanceUseCase };
+    };
+
+    const httpRequest = {
+        params: {
+            userId: faker.string.uuid(),
+        },
+    };
+
+    it('should return 200 when getting user balance', async () => {
+        //arrange
+        const { sut } = await makeSut();
+
+        //act
+        const httpResponse = await sut.execute(httpRequest);
+
+        //assert
+        expect(httpResponse.statusCode).toBe(200);
+    });
+});
