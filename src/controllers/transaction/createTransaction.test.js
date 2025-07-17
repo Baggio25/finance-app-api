@@ -25,10 +25,23 @@ describe('CreateTransactionController', () => {
         },
     };
 
-    it('should return 201 when creating transaction successfully', async () => {
+    it('should return 201 when creating transaction successfully ( EXPENSE )', async () => {
         const { sut } = makeSut();
 
         const response = await sut.execute(baseHttpRequest);
+
+        expect(response.statusCode).toBe(201);
+    });
+
+    it('should return 201 when creating transaction successfully ( EARNING )', async () => {
+        const { sut } = makeSut();
+
+        const response = await sut.execute({
+            body: {
+                ...baseHttpRequest.body,
+                type: 'EARNING',
+            },
+        });
 
         expect(response.statusCode).toBe(201);
     });
@@ -94,6 +107,17 @@ describe('CreateTransactionController', () => {
         const response = await sut.execute({
             ...baseHttpRequest.body,
             date: 'invalid_date ',
+        });
+
+        expect(response.statusCode).toBe(400);
+    });
+
+    it('should return 400 when type is not EXPENSE, EARNING OR INVESTMENT', async () => {
+        const { sut } = makeSut();
+
+        const response = await sut.execute({
+            ...baseHttpRequest.body,
+            type: 'invalid_type',
         });
 
         expect(response.statusCode).toBe(400);
