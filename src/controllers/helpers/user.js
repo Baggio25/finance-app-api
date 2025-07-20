@@ -1,14 +1,4 @@
-import { badRequest, notFound } from '../helpers/http.js';
-
-export const invalidPasswordResponse = () =>
-    badRequest({
-        message: 'Some provided field is not allowed.',
-    });
-
-export const emailAlreadyInUseResponse = () =>
-    badRequest({
-        message: 'Invalid e-mail. Please provide a valid one.',
-    });
+import { notFound } from '../helpers/http.js';
 
 export const userNotFoundResponse = () =>
     notFound({
