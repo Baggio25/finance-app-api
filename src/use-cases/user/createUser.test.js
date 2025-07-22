@@ -144,4 +144,27 @@ describe('CreateUserUseCase', () => {
 
         await expect(promise).rejects.toThrow();
     });
+
+    it('should throw if PasswordHasherAdapterStub throws', async () => {
+        const { sut, passwordHasherAdapterStub } = makeSut();
+        jest.spyOn(passwordHasherAdapterStub, 'execute').mockRejectedValueOnce(
+            new Error(),
+        );
+
+        const promise = sut.execute(user);
+
+        await expect(promise).rejects.toThrow();
+    });
+
+    it('should throw if CreateUserRepository throws', async () => {
+        const { sut, createUserUseRepositoryStub } = makeSut();
+        jest.spyOn(
+            createUserUseRepositoryStub,
+            'execute',
+        ).mockRejectedValueOnce(new Error());
+
+        const promise = sut.execute(user);
+
+        await expect(promise).rejects.toThrow();
+    });
 });
