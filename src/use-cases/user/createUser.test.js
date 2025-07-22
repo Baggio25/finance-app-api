@@ -78,4 +78,23 @@ describe('CreateUserUseCase', () => {
             new EmailAlreadyInUseError(user.email),
         );
     });
+
+    it('should call IdGeneratorAdapter to generate a ramdon id', async () => {
+        const { sut, idGeneratorAdapterStub, createUserUseRepositoryStub } =
+            makeSut();
+        const idGeneratorSpy = jest.spyOn(idGeneratorAdapterStub, 'execute');
+        const createUserRepositorySpy = jest.spyOn(
+            createUserUseRepositoryStub,
+            'execute',
+        );
+
+        await sut.execute(user);
+
+        expect(idGeneratorSpy).toHaveBeenCalled();
+        expect(createUserRepositorySpy).toHaveBeenCalledWith({
+            ...user,
+            password: 'hashed_password',
+            id: 'generated_id',
+        });
+    });
 });
