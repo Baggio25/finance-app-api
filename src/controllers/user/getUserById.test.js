@@ -44,7 +44,9 @@ describe('GetUserByIdController', () => {
 
     it('should return 404 if a user is not found', async () => {
         const { sut, getUserByIdUseCase } = makeSut();
-        jest.spyOn(getUserByIdUseCase, 'execute').mockResolvedValue(null);
+        import.meta.jest
+            .spyOn(getUserByIdUseCase, 'execute')
+            .mockResolvedValue(null);
 
         const result = await sut.execute({
             params: { userId: faker.string.uuid() },
@@ -55,9 +57,9 @@ describe('GetUserByIdController', () => {
 
     it('should return 500 if GetUserByIdUseCase throws an error', async () => {
         const { sut, getUserByIdUseCase } = makeSut();
-        jest.spyOn(getUserByIdUseCase, 'execute').mockRejectedValue(
-            new Error(),
-        );
+        import.meta.jest
+            .spyOn(getUserByIdUseCase, 'execute')
+            .mockRejectedValue(new Error());
 
         const result = await sut.execute({
             params: { userId: faker.string.uuid() },
