@@ -1,6 +1,8 @@
 import {
     IdGeneratorAdapter,
+    PasswordComparatorAdpater,
     PasswordHasherAdapter,
+    TokensGeneratorAdapter,
 } from '../../adapters/index.js';
 import {
     CreateUserController,
@@ -8,6 +10,7 @@ import {
     GetUserBalanceController,
     GetUserByIdController,
     UpdateUserController,
+    LoginUserController,
 } from '../../controllers/index.js';
 
 import {
@@ -24,6 +27,7 @@ import {
     DeleteUserByIdUseCase,
     GetUserBalanceUseCase,
     GetUserByIdUseCase,
+    LoginUserUseCase,
     UpdateUserUseCase,
 } from '../../use-cases/index.js';
 
@@ -49,6 +53,21 @@ export const makeCreateUserController = () => {
     const createUserController = new CreateUserController(createUserUseCase);
 
     return createUserController;
+};
+
+export const makeLoginUserController = () => {
+    const tokensGeneratorAdapter = new TokensGeneratorAdapter();
+    const passwordComparatorAdapter = new PasswordComparatorAdpater();
+    const getUserByEmailRepository = new PostgresGetUserByEmailRepository();
+
+    const loginUserUseCase = new LoginUserUseCase(
+        getUserByEmailRepository,
+        passwordComparatorAdapter,
+        tokensGeneratorAdapter,
+    );
+    const loginUserController = new LoginUserController(loginUserUseCase);
+
+    return loginUserController;
 };
 
 export const makeUpdateUserController = () => {
