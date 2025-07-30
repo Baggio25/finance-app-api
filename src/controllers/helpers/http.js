@@ -3,9 +3,16 @@ export const badRequest = (body) => ({
     body,
 });
 
-export const created = (body) => ({
-    statusCode: 201,
+export const unauthorized = (body) => ({
+    statusCode: 401,
     body,
+});
+
+export const created = () => ({
+    statusCode: 201,
+    body: {
+        message: 'Unauthorized',
+    },
 });
 
 export const serverError = () => ({
