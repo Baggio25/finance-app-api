@@ -6,12 +6,14 @@ export class CreateUserUseCase {
         postgresCreateUserRepository,
         passwordHasherAdapter,
         idGeneratorAdapter,
+        tokensGeneratorAdapter,
     ) {
         this.postgresGetUserByEmailRepository =
             postgresGetUserByEmailRepository;
         this.postgresCreateUserRepository = postgresCreateUserRepository;
         this.passwordHasherAdapter = passwordHasherAdapter;
         this.idGeneratorAdapter = idGeneratorAdapter;
+        this.tokensGeneratorAdapter = tokensGeneratorAdapter;
     }
 
     async execute(createUserParams) {
@@ -34,6 +36,11 @@ export class CreateUserUseCase {
             password: hashedPassword,
         };
 
-        return await this.postgresCreateUserRepository.execute(user);
+        const createdUser =
+            await this.postgresCreateUserRepository.execute(user);
+        return {
+            ...createdUser,
+            tokens: this.tokensGeneratorAdapter.execute(userId),
+        };
     }
 }
