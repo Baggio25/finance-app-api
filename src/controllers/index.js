@@ -4,6 +4,7 @@ export * from './user/updateUser.js';
 export * from './user/deleteUser.js';
 export * from './user/getUserBalance.js';
 export * from './user/loginUser.js';
+export * from './user/refreshToken.js';
 
 export * from './transaction/createTransaction.js';
 export * from './transaction/getTransactionsByUserId.js';
