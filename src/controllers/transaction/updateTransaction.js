@@ -3,10 +3,12 @@ import { updateTransactionSchema } from '../../schemas/transaction.js';
 import {
     badRequest,
     checkIfIdIsValid,
+    forbidden,
     invalidIdResponse,
     ok,
     serverError,
 } from '../helpers/index.js';
+import { ForbiddenError } from '../../errors/user.js';
 
 export class UpdateTransactionController {
     constructor(updateTransactionUseCase) {
@@ -36,6 +38,10 @@ export class UpdateTransactionController {
                 return badRequest({
                     message: error.errors[0].message,
                 });
+            }
+
+            if (error instanceof ForbiddenError) {
+                return forbidden();
             }
 
             console.error(error);

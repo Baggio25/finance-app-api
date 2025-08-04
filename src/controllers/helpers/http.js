@@ -31,3 +31,10 @@ export const notFound = (body) => ({
     statusCode: 404,
     body,
 });
+
+export const forbidden = () => ({
+    statusCode: 403,
+    body: {
+        message: 'Forbidden',
+    },
+});

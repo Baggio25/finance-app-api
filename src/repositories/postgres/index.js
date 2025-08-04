@@ -9,3 +9,4 @@ export * from './transaction/createTransaction.js';
 export * from './transaction/getTransactionsByUserId.js';
 export * from './transaction/updateTransaction.js';
 export * from './transaction/deleteTransaction.js';
+export * from './transaction/getTransactionById.js';
